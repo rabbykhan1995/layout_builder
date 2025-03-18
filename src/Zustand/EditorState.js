@@ -3,7 +3,7 @@
 import { create } from "zustand";
 
 const HeroSectionState = create((set) => ({
-  stateData: { id: undefined, name: "", title: "" },
+  stateData: { id: undefined, name: "", title: "" ,paragraph:""},
 
   // Add hero: sets the id
   addHero: () => set((state) => ({ ...state, stateData: { ...state.stateData, id: 1 } })),
@@ -16,7 +16,9 @@ const HeroSectionState = create((set) => ({
 
   // Add name
   addName: (name) => set((state) => ({ ...state, stateData: { ...state.stateData, name } })),
+  // Add paragraph
 
+  addParagraph: (paragraph) => set((state) => ({ ...state, stateData: { ...state.stateData, paragraph } })),
   // Remove title
   removeTitle: () => set((state) => ({ ...state, stateData: { ...state.stateData, title: "" } })),
 

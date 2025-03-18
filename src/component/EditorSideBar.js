@@ -4,8 +4,8 @@ import HeroSectionState from "@/Zustand/EditorState";
 import { useState } from "react";
 
 const EditorSideBar = () => {
-  const { stateData, addHero, removeHero, addTitle, addName, removeTitle, removeName } = HeroSectionState();
-  const [inputData, setInputData] = useState({id:stateData.id,name:stateData.name,title:stateData.title});
+  const { stateData, addHero, removeHero, addTitle, addName, removeTitle, removeName, addParagraph } = HeroSectionState();
+  const [inputData, setInputData] = useState({id:stateData.id,name:stateData.name,title:stateData.title, paragraph:stateData.paragraph});
 
   return (
     <div className="bg-amber-300 h-[100vh] rounded-r-xl p-5 gap-5 flex flex-col">
@@ -58,6 +58,25 @@ const EditorSideBar = () => {
             Change
           </button>
          </div>
+
+    {/* This is for changing Paragraph */}
+    <div className="flex gap-2">
+         <textarea
+            type="text"
+            className="border rounded-md focus:outline-none  py-1 px-3"
+            placeholder="Title"
+            value={inputData.paragraph} // Example of input using `name` value from stateData
+            onChange={(e) => setInputData({...inputData,paragraph:e.target.value })} // Dynamically update name
+          />
+          <button
+            onClick={() => addParagraph(inputData.paragraph)} // Example for adding title
+            className="py-1 bg-blue-400 rounded-md px-3"
+          >
+            Change
+          </button>
+         </div>
+
+
           <button
             onClick={() => removeHero()} // Example to remove hero
             className="px-5 py-1 bg-red-400 rounded-md"
