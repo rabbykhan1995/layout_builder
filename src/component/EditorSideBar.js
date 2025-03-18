@@ -1,31 +1,73 @@
 'use client'
+
+import HeroSectionState from "@/Zustand/EditorState";
+import { useState } from "react";
+
 const EditorSideBar = () => {
-    
-    const Elements = ["Button", "Image", "Text", "Card", "Link"];
-    const handleDrag = (e, element) => {
-        e.dataTransfer.setData("text/plain", element); // Store as "text"
-        e.dataTransfer.effectAllowed = "move"; // Ensure dragging effect
-    };
+  const { stateData, addHero, removeHero, addTitle, addName, removeTitle, removeName } = HeroSectionState();
+  const [inputData, setInputData] = useState({id:stateData.id,name:stateData.name,title:stateData.title});
 
-    return (
-        <div className="bg-amber-300 h-[100vh] w-[30vw] rounded-r-xl p-5">
-            <h1>
-                Choose Component
-            </h1>
+  return (
+    <div className="bg-amber-300 h-[100vh] rounded-r-xl p-5 gap-5 flex flex-col">
+      {/* Dynamically display either "Choose Component" or "Edit Component" */}
+      {stateData.id === undefined ? (
+        <h1>Choose Component</h1>
+      ) : (
+        <h1>Edit Component</h1>
+      )}
 
-            <div className="flex flex-col gap-5 rounded-xl bg-amber-100 p-5">
-         {Elements.map((e,i)=>{
-            return(   <h1 key={i}
-             draggable
-             onDragStart={(event) => handleDrag(event, e)}
-            className="px-5 bg-amber-500 py-2 rounded-md hover:bg-amber-200">
-                {e}
-            </h1>)
-         })}
-              
-            </div>
+      {/* Render different UI based on whether hero exists */}
+      {stateData.id === undefined ? (
+        <button
+          onClick={() => addHero()} // Call addHero here
+          className="px-5 py-1 bg-green-400 rounded-md"
+        >
+          Add New Hero Section
+        </button>
+      ) : (
+        <div className="flex flex-col gap-5">
+            {/* This is for changing name */}
+         <div className="flex gap-2">
+         <input
+            type="text"
+            className="border rounded-md focus:outline-none  py-1 px-3"
+            placeholder="Name"
+            value={inputData.name} // Example of input using `name` value from stateData
+            onChange={(e) => setInputData({...inputData,name:e.target.value })} // Dynamically update name
+          />
+          <button
+            onClick={() => addName(inputData.name)} // Example for adding title
+            className="py-1 bg-blue-400 rounded-md px-3"
+          >
+            Change
+          </button>
+         </div>
+         {/* This is for changing Title */}
+         <div className="flex gap-2">
+         <input
+            type="text"
+            className="border rounded-md focus:outline-none  py-1 px-3"
+            placeholder="Title"
+            value={inputData.title} // Example of input using `name` value from stateData
+            onChange={(e) => setInputData({...inputData,title:e.target.value })} // Dynamically update name
+          />
+          <button
+            onClick={() => addTitle(inputData.title)} // Example for adding title
+            className="py-1 bg-blue-400 rounded-md px-3"
+          >
+            Change
+          </button>
+         </div>
+          <button
+            onClick={() => removeHero()} // Example to remove hero
+            className="px-5 py-1 bg-red-400 rounded-md"
+          >
+            Delete
+          </button>
         </div>
-    )
-}
+      )}
+    </div>
+  );
+};
 
 export default EditorSideBar;
