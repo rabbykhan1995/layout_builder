@@ -3,7 +3,7 @@
 import { create } from "zustand";
 
 const HeroSectionState = create((set) => ({
-  stateData: { id: undefined, name: "", title: "" ,paragraph:""},
+  stateData: { id: undefined, name: "", title: "" ,paragraph:"",style:{name:"",title:"",paragraph:""}},
 
   // Add hero: sets the id
   addHero: () => set((state) => ({ ...state, stateData: { ...state.stateData, id: 1 } })),
@@ -23,7 +23,20 @@ const HeroSectionState = create((set) => ({
   removeTitle: () => set((state) => ({ ...state, stateData: { ...state.stateData, title: "" } })),
 
   // Remove name
-  removeName: () => set((state) => ({ ...state, stateData: { ...state.stateData, name: "" } }))
+  removeName: () => set((state) => ({ ...state, stateData: { ...state.stateData, name: "" } })),
+
+  // add style 
+
+  addStyle: (style) => set((state) => ({
+    ...state,
+    stateData: {
+      ...state.stateData,
+      style: {
+        ...state.stateData.style, // Spread existing style
+        ...style, // Overwrite only the changed properties
+      },
+    },
+  })),
 }));
 
 export default HeroSectionState;

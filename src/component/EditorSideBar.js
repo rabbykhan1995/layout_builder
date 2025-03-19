@@ -4,8 +4,8 @@ import HeroSectionState from "@/Zustand/EditorState";
 import { useState } from "react";
 
 const EditorSideBar = () => {
-  const { stateData, addHero, removeHero, addTitle, addName, removeTitle, removeName, addParagraph } = HeroSectionState();
-  const [inputData, setInputData] = useState({id:stateData.id,name:stateData.name,title:stateData.title, paragraph:stateData.paragraph});
+  const { stateData, addHero, removeHero, addTitle, addName, addParagraph, addStyle } = HeroSectionState();
+  const [inputData, setInputData] = useState({id:stateData.id,name:stateData.name,title:stateData.title, paragraph:stateData.paragraph, style:{name:stateData.style.name, title:stateData.style.title, paragraph:stateData.style.paragraph}});
 
   return (
     <div className="bg-amber-300 h-[100vh] rounded-r-xl p-5 gap-5 flex flex-col">
@@ -70,6 +70,65 @@ const EditorSideBar = () => {
           />
           <button
             onClick={() => addParagraph(inputData.paragraph)} // Example for adding title
+            className="py-1 bg-blue-400 rounded-md px-3"
+          >
+            Change
+          </button>
+         </div>
+
+         <h1>THis is for the style</h1>
+             {/* This is for style */}
+             <div className="flex flex-col gap-2">
+         <input
+            type="text"
+            className="border rounded-md focus:outline-none  py-1 px-3"
+            placeholder="Title"
+            value={inputData.style.title} // Example of input using `name` value from stateData
+            onChange={(e) =>
+              setInputData((prevData) => ({
+                ...prevData,
+                style: {
+                  ...prevData.style, 
+                  title: e.target.value,
+                },
+              }))
+              
+            } 
+          />
+              <input
+            type="text"
+            className="border rounded-md focus:outline-none  py-1 px-3"
+            placeholder="Name"
+            value={inputData.style.name} // Example of input using `name` value from stateData
+            onChange={(e) =>
+              setInputData((prevData) => ({
+                ...prevData,
+                style: {
+                  ...prevData.style, 
+                  name: e.target.value,
+                },
+              }))
+              
+            } 
+          />
+              <input
+            type="text"
+            className="border rounded-md focus:outline-none  py-1 px-3"
+            placeholder="Paragraph"
+            value={inputData.style.paragraph}
+            onChange={(e) =>
+              setInputData((prevData) => ({
+                ...prevData,
+                style: {
+                  ...prevData.style, 
+                  paragraph: e.target.value,
+                },
+              }))
+              
+            } // Dynamically update name
+          />
+          <button
+            onClick={() => addStyle(inputData.style)} // Example for adding title
             className="py-1 bg-blue-400 rounded-md px-3"
           >
             Change
